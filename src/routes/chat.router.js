@@ -4,13 +4,7 @@ import { createChatController, getMessagesListFromChatController, sendMessageToC
 
 const chatRouter = Router()
 
-//crear canal
-//Body: {name: 'general'}
-//Headers: 'Authorization' : 'Bearer {authorization_token}' 
-//Checkear que el usuario que quiera crear un canal este incluido como miembro en el workspace
 chatRouter.post('/:chat_id', authMiddleware, createChatController)
-
-//enviar mensajes
 
 chatRouter.post('/:chat_id/messages', authMiddleware, sendMessageToChatController)
 

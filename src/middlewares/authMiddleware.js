@@ -14,7 +14,7 @@ export const authMiddleware = (request, response, next) => {
         throw new ServerError('No has proporcionado un token de autorización', 401);
       }
   
-      console.log('Token recibido:', authorization_token); // Verifica que el token se reciba
+      console.log('Token recibido:', authorization_token); 
   
       try {
         const user_info = jwt.verify(authorization_token, ENVIRONMENT.SECRET_KEY_JWT);

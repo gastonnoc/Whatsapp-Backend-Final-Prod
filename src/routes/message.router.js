@@ -4,11 +4,10 @@ import { authMiddleware } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-// Enviar un mensaje
 router.post("/", authMiddleware, async (req, res) => {
     try {
         const { chat, content } = req.body;
-        const sender = req.user._id; // Extraer el usuario autenticado
+        const sender = req.user._id; 
 
         if (!chat || !content) {
             return res.status(400).json({ message: "Chat ID y contenido son requeridos" });
@@ -24,13 +23,12 @@ router.post("/", authMiddleware, async (req, res) => {
     }
 });
 
-// Obtener mensajes de un chat
 router.get("/:chatId", authMiddleware, async (req, res) => {
     try {
         const { chatId } = req.params;
 
         const messages = await Message.find({ chat: chatId })
-            .populate("sender", "username email") // Agrega info del usuario
+            .populate("sender", "username email")
             .populate("chat");
 
         res.status(200).json(messages);
@@ -40,7 +38,6 @@ router.get("/:chatId", authMiddleware, async (req, res) => {
     }
 });
 
-// Eliminar un mensaje (opcional, solo para admins o el dueño del mensaje)
 router.delete("/:messageId", authMiddleware, async (req, res) => {
     try {
         const { messageId } = req.params;
@@ -50,7 +47,6 @@ router.delete("/:messageId", authMiddleware, async (req, res) => {
             return res.status(404).json({ message: "Mensaje no encontrado" });
         }
 
-        // Permitir eliminar solo al usuario que lo envió o a un admin
         if (message.sender.toString() !== req.user._id.toString()) {
             return res.status(403).json({ message: "No autorizado para eliminar este mensaje" });
         }

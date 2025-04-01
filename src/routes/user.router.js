@@ -4,7 +4,6 @@ import { authMiddleware } from '../middlewares/authMiddleware.js';
 
 const userRouter = express.Router();
 
-// Ruta para actualizar la imagen de perfil
 userRouter.patch('/profile-image', authMiddleware, updateProfileImage);
 
 export default userRouter;

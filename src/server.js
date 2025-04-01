@@ -20,13 +20,11 @@ const __dirname = path.dirname(__filename);
 app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 
-// 🔹 Usar carpeta temporal en Vercel
 const uploadDir = "/tmp/uploads";
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Ruta protegida para actualizar la imagen de perfil
 app.patch("/api/user/profile-image", authMiddleware, (req, res) => {
     try {
         const { file } = req.body;
@@ -36,7 +34,6 @@ app.patch("/api/user/profile-image", authMiddleware, (req, res) => {
             return res.status(400).json({ message: "No image file provided" });
         }
 
-        // Seguridad: Validar que el archivo sea una imagen
         if (!file.startsWith("data:image/")) {
             return res.status(400).json({ message: "Invalid file format" });
         }
@@ -62,13 +59,11 @@ app.patch("/api/user/profile-image", authMiddleware, (req, res) => {
     }
 });
 
-// Rutas
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/chat", chatRouter);
 app.use("/api/message", messageRouter);
 
-// Iniciar servidor
 app.listen(ENVIRONMENT.PORT, () => {
     console.log(`El servidor se está ejecutando en http://localhost:${ENVIRONMENT.PORT}`);
 });

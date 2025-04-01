@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const chatSchema = new mongoose.Schema(
     {
         name: { type: String, required: true },
-        users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }], // Usuarios en el chat
+        users: [{ type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }], 
         messages: [
             {
                 sender: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
@@ -12,7 +12,7 @@ const chatSchema = new mongoose.Schema(
             }
         ]
     },
-    { timestamps: true } // Agrega createdAt y updatedAt automáticamente
+    { timestamps: true } 
 );
 
 const Chat = mongoose.model("Chat", chatSchema);

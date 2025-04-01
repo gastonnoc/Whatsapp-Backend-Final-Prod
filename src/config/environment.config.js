@@ -1,6 +1,5 @@
 import dotenv from 'dotenv'
 
-//Carga las variables de entorno en process.env
 dotenv.config()
 
 const ENVIRONMENT = {

@@ -28,15 +28,13 @@ export const registerController = async (req, res) => {
         const passwordHash = await bcrypt.hash(password, 10)
 
         const verification_token = jwt.sign(
-            { email }, //Lo que queremos guardar en el token
-            ENVIRONMENT.SECRET_KEY_JWT, //Clave con la que vamos a firmar
-            { expiresIn: '24h' } //Fecha de expiracion del token
+            { email }, 
+            ENVIRONMENT.SECRET_KEY_JWT, 
+            { expiresIn: '24h' } 
         )
 
         await UserRepository.create({ username, email, password: passwordHash, verification_token, profile_image_base64 })
-        //Le vamos a enviar un mail a el usuario
-        //El mail va a tener un link
-        //<a href='http://localhost:3000/api/auth/verifyEmail?verification_token=dsadssadosakdsaodsadsadijiodsad$'>Click para verificar</a>
+
         await sendMail({
             to: email,
             subject: 'Valida tu email',
@@ -214,7 +212,6 @@ export const rewritePasswordController = async (req, res) => {
         const { newPassword, reset_token } = req.body
         const { _id } = jwt.verify(reset_token, ENVIRONMENT.SECRET_KEY_JWT)
 
-        // Hashear la pwd
         const newHashedPassword = await bcrypt.hash(newPassword, 10)
         await UserRepository.changeUserPassword(_id, newHashedPassword)
 

@@ -6,10 +6,9 @@ import { AUTHORIZATION_TOKEN_PROPS } from "../utils/constants/token.constants.js
 
 export const createChatController =async (req, res) =>{
     try{
-        //Chat name
+
         const {name} = req.body
 
-        //id del usuario que quiere crear el chat
         const user_id = req.user[AUTHORIZATION_TOKEN_PROPS.ID]
 
         const new_chat = await chatRepository.createChat({name, user_id, chat_id})
